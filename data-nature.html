@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Data Nature - Data Detective by Dynatech</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1F2B61',
+                        secondary: '#1D2088',
+                        accent: '#009E9F',
+                        danger: '#EF4444',
+                        structured: '#1F2B61',
+                        unstructured: '#1D2088',
+                        neutral: '#64748B'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            padding-top: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800 min-h-screen">
+    <!-- Fixed Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <img src="https://media.wdigitalagency.com/dynatech-logo.webp" alt="Dynatech Logo" class="h-8 w-auto mr-3">
+                    <a href="data-classification-game.html" class="text-xl font-bold text-primary hover:text-primary/80 transition-colors">Data Detective by Dynatech</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="data-classification-game.html" class="text-sm text-gray-600 hover:text-primary transition-colors">
+                        <i class="fa fa-gamepad mr-1"></i>Play Game
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                Understanding Data Nature
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+                Master the fundamentals of structured and unstructured data to enhance your AI and analytics capabilities. 
+                Learn how different data types impact your work performance and decision-making.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="data-classification-game.html" class="bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    Practice with Game <i class="fa fa-arrow-right ml-2"></i>
+                </a>
+                <button onclick="scrollToSection('overview')" class="bg-white hover:bg-gray-50 text-primary font-semibold py-4 px-8 rounded-lg border-2 border-primary transition-all duration-300">
+                    Start Learning
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <!-- Overview Section -->
+        <section id="overview" class="mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">What Are Structured and Unstructured Data?</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <!-- Structured Data -->
+                    <div class="bg-structured/5 p-6 rounded-xl border-l-4 border-structured">
+                        <h3 class="font-bold text-structured text-2xl mb-4">
+                            <i class="fa fa-table mr-3"></i>Structured Data
+                        </h3>
+                        <p class="text-gray-700 mb-4">
+                            Organized in a predefined format, such as rows and columns in databases, spreadsheets (e.g., SQL tables, Excel files), or CSV files.
+                        </p>
+                        <div class="bg-white p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-2">Examples:</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Customer records with fields like name, age, and address</li>
+                                <li>• Sales data in spreadsheets</li>
+                                <li>• Database tables with fixed schemas</li>
+                                <li>• Financial reports with standardized formats</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Unstructured Data -->
+                    <div class="bg-unstructured/5 p-6 rounded-xl border-l-4 border-unstructured">
+                        <h3 class="font-bold text-unstructured text-2xl mb-4">
+                            <i class="fa fa-file-text-o mr-3"></i>Unstructured Data
+                        </h3>
+                        <p class="text-gray-700 mb-4">
+                            Lacks a fixed structure, making it free-form and harder to organize. This data doesn't fit into traditional databases.
+                        </p>
+                        <div class="bg-white p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-2">Examples:</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Text documents and emails</li>
+                                <li>• Images and videos</li>
+                                <li>• Social media posts</li>
+                                <li>• Audio files and voice recordings</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Differentiation Section -->
+        <section id="differentiation" class="mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">How to Differentiate Them</h2>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Format -->
+                    <div class="text-center p-6 bg-gray-50 rounded-xl">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-list-alt text-2xl text-primary"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Format</h3>
+                        <p class="text-sm text-gray-600">
+                            <strong>Structured:</strong> Fits into tables with clear schemas and fixed fields.<br>
+                            <strong>Unstructured:</strong> Irregular and doesn't conform to a model.
+                        </p>
+                    </div>
+                    
+                    <!-- Storage -->
+                    <div class="text-center p-6 bg-gray-50 rounded-xl">
+                        <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-database text-2xl text-secondary"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Storage</h3>
+                        <p class="text-sm text-gray-600">
+                            <strong>Structured:</strong> Relational databases (MySQL, PostgreSQL).<br>
+                            <strong>Unstructured:</strong> Files, NoSQL databases, cloud storage.
+                        </p>
+                    </div>
+                    
+                    <!-- Analysis -->
+                    <div class="text-center p-6 bg-gray-50 rounded-xl">
+                        <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-search text-2xl text-accent"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Ease of Analysis</h3>
+                        <p class="text-sm text-gray-600">
+                            <strong>Structured:</strong> Query-friendly using SQL.<br>
+                            <strong>Unstructured:</strong> Requires text mining or image recognition.
+                        </p>
+                    </div>
+                    
+                    <!-- Volume -->
+                    <div class="text-center p-6 bg-gray-50 rounded-xl">
+                        <div class="w-16 h-16 bg-neutral/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-pie-chart text-2xl text-neutral"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Volume</h3>
+                        <p class="text-sm text-gray-600">
+                            <strong>Structured:</strong> Smaller, more predictable.<br>
+                            <strong>Unstructured:</strong> Makes up ~80-90% of all data.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Importance Section -->
+        <section id="ai-importance" class="mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Why They Are Important for AI</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Structured Data for AI -->
+                    <div class="bg-gradient-to-br from-structured/5 to-structured/10 p-6 rounded-xl">
+                        <h3 class="font-bold text-structured text-2xl mb-4">
+                            <i class="fa fa-cogs mr-3"></i>Structured Data in AI
+                        </h3>
+                        <p class="text-gray-700 mb-4">
+                            Enables efficient machine learning models for predictions, classifications, and analytics.
+                        </p>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-structured mr-3 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold">Clean Training Data</h4>
+                                    <p class="text-sm text-gray-600">AI algorithms thrive on clean, labeled inputs for training.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-structured mr-3 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold">Predictive Analytics</h4>
+                                    <p class="text-sm text-gray-600">Perfect for regression analysis on sales data and forecasting.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Unstructured Data for AI -->
+                    <div class="bg-gradient-to-br from-unstructured/5 to-unstructured/10 p-6 rounded-xl">
+                        <h3 class="font-bold text-unstructured text-2xl mb-4">
+                            <i class="fa fa-brain mr-3"></i>Unstructured Data in AI
+                        </h3>
+                        <p class="text-gray-700 mb-4">
+                            Fuels advanced AI like natural language processing, computer vision, and sentiment analysis.
+                        </p>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-unstructured mr-3 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold">Rich Context</h4>
+                                    <p class="text-sm text-gray-600">Provides real-world context that structured data often misses.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-check-circle text-unstructured mr-3 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold">Advanced Applications</h4>
+                                    <p class="text-sm text-gray-600">Enables NLP, computer vision, and complex pattern recognition.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 p-6 bg-gradient-to-r from-accent/10 to-primary/10 rounded-xl">
+                    <h3 class="font-bold text-xl mb-3 text-center">Overall Impact</h3>
+                    <p class="text-gray-700 text-center">
+                        AI combines both data types for comprehensive insights—e.g., chatbots use unstructured text, 
+                        while recommendation systems blend structured user data with unstructured reviews. This drives 
+                        innovation in fields like healthcare (analyzing scans) and finance (fraud detection).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section id="performance" class="mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">How to Utilize Them for Increasing Work Performance</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <!-- Structured Data Performance -->
+                    <div class="bg-gradient-to-br from-primary/5 to-primary/10 p-6 rounded-xl">
+                        <h3 class="font-bold text-primary text-2xl mb-4">
+                            <i class="fa fa-line-chart mr-3"></i>Structured Data Benefits
+                        </h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fa fa-arrow-right text-primary mr-3 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold">Dashboards & Reporting</h4>
+                                    <p class="text-sm text-gray-600">Use BI tools like Tableau to track KPIs and make data-driven decisions faster.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-arrow-right text-primary mr-3 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold">Automated Queries</h4>
+                                    <p class="text-sm text-gray-600">Improve efficiency in operations like inventory management.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Unstructured Data Performance -->
+                    <div class="bg-gradient-to-br from-secondary/5 to-secondary/10 p-6 rounded-xl">
+                        <h3 class="font-bold text-secondary text-2xl mb-4">
+                            <i class="fa fa-magic mr-3"></i>Unstructured Data Benefits
+                        </h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fa fa-arrow-right text-secondary mr-3 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold">AI-Powered Automation</h4>
+                                    <p class="text-sm text-gray-600">NLP to summarize emails/reports, image recognition for quality control.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-arrow-right text-secondary mr-3 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold">Sentiment Analysis</h4>
+                                    <p class="text-sm text-gray-600">Analyze customer feedback to identify trends and improve services.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Integration Strategies -->
+                <div class="bg-gradient-to-r from-accent/10 to-primary/10 p-6 rounded-xl">
+                    <h3 class="font-bold text-xl mb-4 text-center">Integration Strategies</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold mb-2">Convert Unstructured to Structured</h4>
+                            <p class="text-sm text-gray-600">Extract entities from text using tools like spaCy or NLTK.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Leverage AI Platforms</h4>
+                            <p class="text-sm text-gray-600">Use Google Cloud AI, AWS SageMaker for predictive maintenance or personalized marketing.</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-4 bg-white/50 rounded-lg">
+                        <h4 class="font-semibold text-center mb-2">Performance Impact</h4>
+                        <p class="text-sm text-gray-700 text-center">
+                            <strong>Benefits:</strong> Reduces manual work, enhances accuracy, speeds up insights, 
+                            and boosts productivity by 20-40% in data-intensive roles.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Hands-On Resources</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="text-center p-6 bg-gray-50 rounded-xl">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-code text-2xl text-primary"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Structured Data Tools</h3>
+                        <p class="text-sm text-gray-600 mb-4">
+                            Explore Python's Pandas library for data manipulation and analysis.
+                        </p>
+                        <a href="https://pandas.pydata.org/" target="_blank" class="text-primary hover:text-primary/80 font-semibold">
+                            Learn Pandas <i class="fa fa-external-link ml-1"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="text-center p-6 bg-gray-50 rounded-xl">
+                        <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fa fa-language text-2xl text-secondary"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Unstructured Data Tools</h3>
+                        <p class="text-sm text-gray-600 mb-4">
+                            Use NLTK for natural language processing and text analysis.
+                        </p>
+                        <a href="https://www.nltk.org/" target="_blank" class="text-secondary hover:text-secondary/80 font-semibold">
+                            Learn NLTK <i class="fa fa-external-link ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <div class="inline-block p-6 bg-gradient-to-r from-accent/10 to-primary/10 rounded-xl">
+                        <h3 class="font-bold text-lg mb-2">Practice with Real Data</h3>
+                        <p class="text-sm text-gray-600 mb-4">
+                            Explore datasets on Kaggle to practice with real-world examples.
+                        </p>
+                        <a href="https://www.kaggle.com/datasets" target="_blank" class="bg-accent hover:bg-accent/90 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300">
+                            Browse Kaggle <i class="fa fa-external-link ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="text-center">
+            <div class="bg-gradient-to-r from-primary to-secondary text-white rounded-2xl p-8">
+                <h2 class="text-3xl font-bold mb-4">Ready to Test Your Knowledge?</h2>
+                <p class="text-xl mb-6 opacity-90">
+                    Practice what you've learned with our interactive data classification game!
+                </p>
+                <a href="data-classification-game.html" class="bg-white hover:bg-gray-100 text-primary font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    Play Data Detective Game <i class="fa fa-gamepad ml-2"></i>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-4">
+                <h3 class="text-lg font-bold mb-2">Dynatech Limited</h3>
+                <p class="mb-2">
+                    <a href="https://www.dynatech.com.hk" class="text-blue-300 hover:text-blue-200 underline" target="_blank" rel="noopener noreferrer">
+                        https://www.dynatech.com.hk
+                    </a>
+                </p>
+                <p class="text-gray-300">
+                    Contact Email: <a href="mailto:info@dynatech.com.hk" class="text-blue-300 hover:text-blue-200 underline">info@dynatech.com.hk</a>
+                </p>
+            </div>
+            <p class="text-gray-400 text-sm">
+                © <span id="current-year">2025</span> Data Detective: Structure Sleuth | An educational game to learn about data types
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Set dynamic year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Smooth scroll function
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
