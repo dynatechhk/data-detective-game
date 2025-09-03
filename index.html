@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structured vs Unstructured Data Game</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1F2B61',
+                        secondary: '#1D2088',
+                        accent: '#009E9F',
+                        danger: '#EF4444',
+                        structured: '#1F2B61',
+                        unstructured: '#1D2088',
+                        neutral: '#64748B'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            }
+            .dragging {
+                @apply opacity-70 scale-105 rotate-1;
+            }
+            .drop-zone-active {
+                @apply bg-opacity-20 border-dashed border-2;
+            }
+        }
+    </style>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            padding-top: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800 min-h-screen">
+    <!-- Fixed Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <img src="https://media.wdigitalagency.com/dynatech-logo.webp" alt="Dynatech Logo" class="h-8 w-auto mr-3">
+                    <a href="data-classification-game.html" class="text-xl font-bold text-primary hover:text-primary/80 transition-colors">Data Detective by Dynatech</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                Master Data Classification
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+                Learn to distinguish between structured and unstructured data through interactive gameplay. 
+                Perfect for students, professionals, and anyone looking to understand data types.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button id="start-game" class="bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    Start the Game <i class="fa fa-arrow-right ml-2"></i>
+                </button>
+                <a href="data-nature.html" class="bg-white hover:bg-gray-50 text-primary font-semibold py-4 px-8 rounded-lg border-2 border-primary transition-all duration-300 inline-block">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <!-- Game Introduction -->
+        <section id="introduction" class="mb-12 bg-white rounded-2xl shadow-lg p-8 transition-all duration-500">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">What's the Difference?</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-structured/10 p-5 rounded-lg border-l-4 border-structured">
+                    <h3 class="font-bold text-structured text-xl mb-2">
+                        <i class="fa fa-table mr-2"></i>Structured Data
+                    </h3>
+                    <p class="text-gray-700">
+                        Data that is highly organized, follows a predefined format, and can be easily stored in tables with rows and columns.
+                        Examples: spreadsheets, databases, and CSV files.
+                    </p>
+                </div>
+                
+                <div class="bg-unstructured/10 p-5 rounded-lg border-l-4 border-unstructured">
+                    <h3 class="font-bold text-unstructured text-xl mb-2">
+                        <i class="fa fa-file-text-o mr-2"></i>Unstructured Data
+                    </h3>
+                    <p class="text-gray-700">
+                        Data that has no predefined format or organization. It's often text-heavy but may contain dates, numbers, and facts.
+                        Examples: emails, photos, videos, and social media posts.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="bg-accent/10 p-5 rounded-lg border-l-4 border-accent mb-6">
+                <h3 class="font-bold text-accent text-xl mb-2">
+                    <i class="fa fa-gamepad mr-2"></i>How to Play
+                </h3>
+                <p class="text-gray-700">
+                    Drag each data item from the center and drop it into either the "Structured Data" or "Unstructured Data" box.
+                    You'll get instant feedback on your choices, and your score will update as you play!
+                </p>
+            </div>
+            
+            <button id="start-game-intro" class="bg-primary hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                Start the Game! <i class="fa fa-arrow-right ml-2"></i>
+            </button>
+        </section>
+
+        <!-- Game Area -->
+        <section id="game-area" class="hidden bg-white rounded-2xl shadow-lg p-8">
+            <!-- Score Board -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h3 class="font-bold text-gray-700">Score</h3>
+                    <p id="score" class="text-3xl font-bold text-primary">0</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow p-4">
+                    <h3 class="font-bold text-gray-700">Items Left</h3>
+                    <p id="items-left" class="text-3xl font-bold text-neutral">10</p>
+                </div>
+                
+                <button id="restart-game" class="bg-accent hover:bg-teal-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300">
+                    <i class="fa fa-refresh mr-2"></i>Restart
+                </button>
+            </div>
+            
+            <!-- Game Board -->
+            <!-- Mobile Layout: Items at top -->
+            <div class="block md:hidden">
+                <!-- Items to Classify (Mobile - Top) -->
+                <div class="bg-white rounded-xl shadow-md p-4 mb-6">
+                    <h2 class="text-xl font-bold text-center text-neutral mb-4">Data Items</h2>
+                    <div id="items-container-mobile" class="grid grid-cols-2 gap-3">
+                        <!-- Items will be generated here -->
+                    </div>
+                </div>
+                
+                <!-- Drop Zones (Mobile - Bottom) -->
+                <div class="grid grid-cols-1 gap-4">
+                    <!-- Structured Data Zone -->
+                    <div id="structured-zone-mobile" class="drop-zone min-h-48 bg-structured/5 rounded-xl shadow-md p-4 border-2 border-structured/30 flex flex-col items-center justify-center">
+                        <i class="fa fa-table text-4xl text-structured mb-3"></i>
+                        <h2 class="text-xl font-bold text-structured mb-2">Structured Data</h2>
+                        <p class="text-center text-gray-600 mb-3 text-sm">Drop items here</p>
+                        <div id="structured-items-mobile" class="w-full min-h-32 overflow-y-auto"></div>
+                    </div>
+                    
+                    <!-- Unstructured Data Zone -->
+                    <div id="unstructured-zone-mobile" class="drop-zone min-h-48 bg-unstructured/5 rounded-xl shadow-md p-4 border-2 border-unstructured/30 flex flex-col items-center justify-center">
+                        <i class="fa fa-file-text-o text-4xl text-unstructured mb-3"></i>
+                        <h2 class="text-xl font-bold text-unstructured mb-2">Unstructured Data</h2>
+                        <p class="text-center text-gray-600 mb-3 text-sm">Drop items here</p>
+                        <div id="unstructured-items-mobile" class="w-full min-h-32 overflow-y-auto"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Desktop Layout: Original 5-column grid -->
+            <div class="hidden md:grid grid-cols-5 gap-6">
+                <!-- Structured Data Zone -->
+                <div class="col-span-2">
+                    <div id="structured-zone" class="drop-zone h-96 bg-structured/5 rounded-xl shadow-md p-4 border-2 border-structured/30 flex flex-col items-center justify-center">
+                        <i class="fa fa-table text-5xl text-structured mb-4"></i>
+                        <h2 class="text-2xl font-bold text-structured mb-2">Structured Data</h2>
+                        <p class="text-center text-gray-600 mb-4">Drop items here</p>
+                        <div id="structured-items" class="w-full h-full overflow-y-auto mt-2"></div>
+                    </div>
+                </div>
+                
+                <!-- Items to Classify -->
+                <div class="col-span-1">
+                    <div class="bg-white rounded-xl shadow-md p-4 h-96 flex flex-col">
+                        <h2 class="text-xl font-bold text-center text-neutral mb-4">Data Items</h2>
+                        <div id="items-container" class="flex-grow overflow-y-auto grid grid-cols-1 gap-3">
+                            <!-- Items will be generated here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Unstructured Data Zone -->
+                <div class="col-span-2">
+                    <div id="unstructured-zone" class="drop-zone h-96 bg-unstructured/5 rounded-xl shadow-md p-4 border-2 border-unstructured/30 flex flex-col items-center justify-center">
+                        <i class="fa fa-file-text-o text-5xl text-unstructured mb-4"></i>
+                        <h2 class="text-2xl font-bold text-unstructured mb-2">Unstructured Data</h2>
+                        <p class="text-center text-gray-600 mb-4">Drop items here</p>
+                        <div id="unstructured-items" class="w-full h-full overflow-y-auto mt-2"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Feedback Area -->
+            <div id="feedback" class="mt-6 hidden p-4 rounded-lg"></div>
+        </section>
+        
+        <!-- Game Results -->
+        <section id="results" class="hidden bg-white rounded-2xl shadow-lg p-8 mt-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Game Complete!</h2>
+            <div class="text-center mb-6">
+                <p class="text-xl mb-2">Your Score: <span id="final-score" class="font-bold text-primary text-2xl">0</span>/10</p>
+                <div id="score-message" class="text-lg mt-2"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <h3 class="font-bold text-structured text-xl mb-2">Structured Data Examples You Mastered</h3>
+                    <ul id="structured-examples" class="list-disc pl-5 text-gray-700 space-y-1"></ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-unstructured text-xl mb-2">Unstructured Data Examples You Mastered</h3>
+                    <ul id="unstructured-examples" class="list-disc pl-5 text-gray-700 space-y-1"></ul>
+                </div>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button id="play-again" class="bg-primary hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none">
+                    Play Again <i class="fa fa-refresh ml-2"></i>
+                </button>
+                <a href="data-nature.html" class="bg-accent hover:bg-accent/90 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none text-center">
+                    Learn More <i class="fa fa-book ml-2"></i>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-4">
+                <h3 class="text-lg font-bold mb-2">Dynatech Limited</h3>
+                <p class="mb-2">
+                    <a href="https://www.dynatech.com.hk" class="text-blue-300 hover:text-blue-200 underline" target="_blank" rel="noopener noreferrer">
+                        https://www.dynatech.com.hk
+                    </a>
+                </p>
+                <p class="text-gray-300">
+                    Contact Email: <a href="mailto:info@dynatech.com.hk" class="text-blue-300 hover:text-blue-200 underline">info@dynatech.com.hk</a>
+                </p>
+            </div>
+            <p class="text-gray-400 text-sm">
+                © <span id="current-year">2025</span> Data Detective: Structure Sleuth | An educational game to learn about data types
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Set dynamic year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Game data - items to classify with their correct categories
+        const dataItems = [
+            { id: 1, name: "Customer database", type: "structured", icon: "fa-database" },
+            { id: 2, name: "Instagram photo", type: "unstructured", icon: "fa-camera" },
+            { id: 3, name: "Excel spreadsheet", type: "structured", icon: "fa-file-excel-o" },
+            { id: 4, name: "Email message", type: "unstructured", icon: "fa-envelope" },
+            { id: 5, name: "CSV file of sales", type: "structured", icon: "fa-file-text" },
+            { id: 6, name: "YouTube video", type: "unstructured", icon: "fa-video-camera" },
+            { id: 7, name: "SQL table", type: "structured", icon: "fa-table" },
+            { id: 8, name: "Twitter post", type: "unstructured", icon: "fa-comment" },
+            { id: 9, name: "Patient medical records (tabular)", type: "structured", icon: "fa-heartbeat" },
+            { id: 10, name: "Doctor's handwritten notes", type: "unstructured", icon: "fa-pencil" },
+            { id: 11, name: "Product catalog database", type: "structured", icon: "fa-shopping-cart" },
+            { id: 12, name: "Customer support call recording", type: "unstructured", icon: "fa-phone" },
+            { id: 13, name: "Sensor readings log", type: "structured", icon: "fa-thermometer" },
+            { id: 14, name: "Research paper PDF", type: "unstructured", icon: "fa-file-pdf-o" },
+            { id: 15, name: "Inventory management system", type: "structured", icon: "fa-cubes" }
+        ];
+
+        // Game state
+        let gameState = {
+            score: 0,
+            itemsUsed: [],
+            itemsLeft: 0,
+            currentItems: []
+        };
+
+        // DOM Elements
+        const startButton = document.getElementById('start-game');
+        const restartButton = document.getElementById('restart-game');
+        const playAgainButton = document.getElementById('play-again');
+        const introduction = document.getElementById('introduction');
+        const gameArea = document.getElementById('game-area');
+        const results = document.getElementById('results');
+        
+        // Desktop elements
+        const itemsContainer = document.getElementById('items-container');
+        const structuredZone = document.getElementById('structured-zone');
+        const unstructuredZone = document.getElementById('unstructured-zone');
+        const structuredItems = document.getElementById('structured-items');
+        const unstructuredItems = document.getElementById('unstructured-items');
+        
+        // Mobile elements
+        const itemsContainerMobile = document.getElementById('items-container-mobile');
+        const structuredZoneMobile = document.getElementById('structured-zone-mobile');
+        const unstructuredZoneMobile = document.getElementById('unstructured-zone-mobile');
+        const structuredItemsMobile = document.getElementById('structured-items-mobile');
+        const unstructuredItemsMobile = document.getElementById('unstructured-items-mobile');
+        
+        const scoreDisplay = document.getElementById('score');
+        const itemsLeftDisplay = document.getElementById('items-left');
+        const finalScoreDisplay = document.getElementById('final-score');
+        const scoreMessage = document.getElementById('score-message');
+        const feedback = document.getElementById('feedback');
+        const structuredExamples = document.getElementById('structured-examples');
+        const unstructuredExamples = document.getElementById('unstructured-examples');
+
+        // Initialize the game
+        function initGame() {
+            // Reset game state
+            gameState = {
+                score: 0,
+                itemsUsed: [],
+                itemsLeft: 10,
+                currentItems: []
+            };
+            
+            // Update displays
+            scoreDisplay.textContent = gameState.score;
+            itemsLeftDisplay.textContent = gameState.itemsLeft;
+            
+            // Clear containers
+            itemsContainer.innerHTML = '';
+            structuredItems.innerHTML = '';
+            unstructuredItems.innerHTML = '';
+            itemsContainerMobile.innerHTML = '';
+            structuredItemsMobile.innerHTML = '';
+            unstructuredItemsMobile.innerHTML = '';
+            feedback.classList.add('hidden');
+            
+            // Select 10 random items for this game
+            gameState.currentItems = getRandomItems(10);
+            
+            // Create draggable items
+            createDraggableItems();
+            
+            // Setup event listeners for drop zones
+            setupDropZones();
+        }
+
+        // Get random items from the dataItems array
+        function getRandomItems(count) {
+            const shuffled = [...dataItems].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        // Create draggable items
+        function createDraggableItems() {
+            gameState.currentItems.forEach(item => {
+                // Create desktop version
+                const itemElement = document.createElement('div');
+                itemElement.id = `item-${item.id}`;
+                itemElement.className = 'bg-white border border-gray-200 rounded-lg p-3 shadow card-hover cursor-move flex items-center';
+                itemElement.draggable = true;
+                itemElement.setAttribute('data-type', item.type);
+                itemElement.setAttribute('data-id', item.id);
+                
+                itemElement.innerHTML = `
+                    <i class="fa ${item.icon} text-gray-500 mr-3"></i>
+                    <span>${item.name}</span>
+                `;
+                
+                // Add drag event listeners
+                itemElement.addEventListener('dragstart', handleDragStart);
+                itemElement.addEventListener('dragend', handleDragEnd);
+                
+                itemsContainer.appendChild(itemElement);
+                
+                // Create mobile version
+                const itemElementMobile = itemElement.cloneNode(true);
+                itemElementMobile.id = `item-mobile-${item.id}`;
+                itemElementMobile.className = 'bg-white border border-gray-200 rounded-lg p-2 shadow card-hover cursor-move flex items-center text-sm';
+                
+                // Add drag event listeners to mobile version
+                itemElementMobile.addEventListener('dragstart', handleDragStart);
+                itemElementMobile.addEventListener('dragend', handleDragEnd);
+                
+                // Add touch event listeners for mobile devices
+                itemElementMobile.addEventListener('touchstart', handleTouchStart, { passive: false });
+                itemElementMobile.addEventListener('touchmove', handleTouchMove, { passive: false });
+                itemElementMobile.addEventListener('touchend', handleTouchEnd, { passive: false });
+                
+                itemsContainerMobile.appendChild(itemElementMobile);
+            });
+        }
+
+        // Setup drop zones
+        function setupDropZones() {
+            const dropZones = [structuredZone, unstructuredZone, structuredZoneMobile, unstructuredZoneMobile];
+            
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', handleDragOver);
+                zone.addEventListener('dragenter', handleDragEnter);
+                zone.addEventListener('dragleave', handleDragLeave);
+                zone.addEventListener('drop', handleDrop);
+            });
+        }
+
+        // Drag and drop handlers
+        function handleDragStart(e) {
+            this.classList.add('dragging');
+            e.dataTransfer.setData('text/plain', this.id);
+        }
+
+        function handleDragEnd() {
+            this.classList.remove('dragging');
+            
+            // Remove active class from all drop zones
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.classList.remove('drop-zone-active');
+            });
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault(); // Allow drop
+        }
+
+        function handleDragEnter(e) {
+            e.preventDefault();
+            this.classList.add('drop-zone-active');
+        }
+
+        function handleDragLeave() {
+            this.classList.remove('drop-zone-active');
+        }
+
+        // Touch event handlers for mobile devices
+        let touchStartElement = null;
+        let touchStartPosition = null;
+
+        function handleTouchStart(e) {
+            touchStartElement = this;
+            touchStartPosition = {
+                x: e.touches[0].clientX,
+                y: e.touches[0].clientY
+            };
+            this.classList.add('dragging');
+        }
+
+        function handleTouchMove(e) {
+            if (!touchStartElement) return;
+            e.preventDefault();
+        }
+
+        function handleTouchEnd(e) {
+            if (!touchStartElement) return;
+            
+            const touchEndPosition = {
+                x: e.changedTouches[0].clientX,
+                y: e.changedTouches[0].clientY
+            };
+            
+            // Find the element under the touch point
+            const elementBelow = document.elementFromPoint(touchEndPosition.x, touchEndPosition.y);
+            const dropZone = elementBelow?.closest('.drop-zone');
+            
+            if (dropZone) {
+                // Simulate a drop event
+                const fakeEvent = {
+                    preventDefault: () => {},
+                    dataTransfer: {
+                        getData: () => touchStartElement.id
+                    }
+                };
+                handleDrop.call(dropZone, fakeEvent);
+            }
+            
+            touchStartElement.classList.remove('dragging');
+            touchStartElement = null;
+            touchStartPosition = null;
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            this.classList.remove('drop-zone-active');
+            
+            const itemId = e.dataTransfer.getData('text/plain');
+            const itemElement = document.getElementById(itemId);
+            
+            if (!itemElement) return;
+            
+            // Determine if this is a mobile item
+            const isMobileItem = itemId.includes('mobile');
+            const baseItemId = isMobileItem ? itemId.replace('mobile-', '') : itemId;
+            
+            // Get both desktop and mobile elements
+            const desktopElement = document.getElementById(baseItemId);
+            const mobileElement = document.getElementById(`mobile-${baseItemId}`);
+            
+            // Determine which zone the item was dropped in
+            const isStructuredZone = this.id === 'structured-zone' || this.id === 'structured-zone-mobile';
+            const targetZone = isStructuredZone ? 
+                (isMobileItem ? structuredItemsMobile : structuredItems) : 
+                (isMobileItem ? unstructuredItemsMobile : unstructuredItems);
+            
+            // Get the item's correct type
+            const itemType = itemElement.getAttribute('data-type');
+            const itemIdNum = parseInt(itemElement.getAttribute('data-id'));
+            const itemData = dataItems.find(item => item.id === itemIdNum);
+            
+            // Check if the classification is correct
+            const isCorrect = (isStructuredZone && itemType === 'structured') || 
+                             (!isStructuredZone && itemType === 'unstructured');
+            
+            // Update both desktop and mobile elements' appearance
+            const elementsToUpdate = [itemElement];
+            if (isMobileItem && desktopElement) elementsToUpdate.push(desktopElement);
+            if (!isMobileItem && mobileElement) elementsToUpdate.push(mobileElement);
+            
+            elementsToUpdate.forEach(el => {
+                if (isCorrect) {
+                    el.classList.add('bg-green-50', 'border-green-200');
+                    el.classList.remove('bg-white', 'border-gray-200');
+                } else {
+                    el.classList.add('bg-red-50', 'border-red-200');
+                    el.classList.remove('bg-white', 'border-gray-200');
+                }
+                
+                // Disable dragging for this item
+                el.draggable = false;
+                el.classList.remove('cursor-move');
+            });
+            
+            // Update score only once
+            if (isCorrect) {
+                gameState.score++;
+            }
+            
+            // Move the item to the target zone
+            targetZone.appendChild(itemElement);
+            
+            // Remove the corresponding element from the other layout
+            if (isMobileItem && desktopElement) {
+                desktopElement.remove();
+            } else if (!isMobileItem && mobileElement) {
+                mobileElement.remove();
+            }
+            
+            // Decrement items left
+            gameState.itemsLeft--;
+            
+            // Update displays
+            scoreDisplay.textContent = gameState.score;
+            itemsLeftDisplay.textContent = gameState.itemsLeft;
+            
+            // Show feedback
+            showFeedback(isCorrect, itemData, isStructuredZone);
+            
+            // Check if game is complete
+            if (gameState.itemsLeft === 0) {
+                endGame();
+            }
+        }
+
+        // Show feedback for the user's choice
+        function showFeedback(isCorrect, item, wasPlacedInStructured) {
+            feedback.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'text-green-800', 'text-red-800');
+            
+            if (isCorrect) {
+                feedback.classList.add('bg-green-100', 'text-green-800');
+                feedback.innerHTML = `
+                    <i class="fa fa-check-circle mr-2"></i>
+                    Correct! "${item.name}" is ${item.type} data.
+                `;
+            } else {
+                feedback.classList.add('bg-red-100', 'text-red-800');
+                feedback.innerHTML = `
+                    <i class="fa fa-times-circle mr-2"></i>
+                    Not quite. "${item.name}" is actually ${item.type} data, not ${wasPlacedInStructured ? 'structured' : 'unstructured'}.
+                `;
+            }
+            
+            // Hide feedback after 3 seconds
+            setTimeout(() => {
+                feedback.classList.add('hidden');
+            }, 3000);
+        }
+
+        // End the game and show results
+        function endGame() {
+            // Show results after a short delay to let the last feedback show
+            setTimeout(() => {
+                gameArea.classList.add('hidden');
+                results.classList.remove('hidden');
+                
+                // Update final score
+                finalScoreDisplay.textContent = gameState.score;
+                
+                // Set score message based on performance
+                if (gameState.score === 10) {
+                    scoreMessage.textContent = "Perfect score! You're a data classification expert!";
+                    scoreMessage.classList.add('text-green-600');
+                } else if (gameState.score >= 7) {
+                    scoreMessage.textContent = "Great job! You have a good understanding of data types.";
+                    scoreMessage.classList.add('text-blue-600');
+                } else if (gameState.score >= 5) {
+                    scoreMessage.textContent = "Not bad! Review the examples to improve your understanding.";
+                    scoreMessage.classList.add('text-amber-600');
+                } else {
+                    scoreMessage.textContent = "Keep practicing! Understanding data types is an important skill.";
+                    scoreMessage.classList.add('text-red-600');
+                }
+                
+                // Populate examples lists
+                structuredExamples.innerHTML = '';
+                unstructuredExamples.innerHTML = '';
+                
+                gameState.currentItems.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = item.name;
+                    
+                    if (item.type === 'structured') {
+                        structuredExamples.appendChild(listItem);
+                    } else {
+                        unstructuredExamples.appendChild(listItem);
+                    }
+                });
+            }, 2000);
+        }
+
+        // Event Listeners
+        startButton.addEventListener('click', () => {
+            introduction.classList.add('hidden');
+            gameArea.classList.remove('hidden');
+            initGame();
+        });
+
+        // Add event listener for the intro section start button
+        const startButtonIntro = document.getElementById('start-game-intro');
+        startButtonIntro.addEventListener('click', () => {
+            introduction.classList.add('hidden');
+            gameArea.classList.remove('hidden');
+            initGame();
+        });
+
+        restartButton.addEventListener('click', () => {
+            results.classList.add('hidden');
+            gameArea.classList.remove('hidden');
+            initGame();
+        });
+
+        playAgainButton.addEventListener('click', () => {
+            results.classList.add('hidden');
+            gameArea.classList.remove('hidden');
+            initGame();
+        });
+    </script>
+</body>
+</html>
